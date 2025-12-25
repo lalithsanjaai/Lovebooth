@@ -11,6 +11,7 @@ import gifshot from 'gifshot';
 import DraggableElement from '../components/editor/DraggableElement';
 import TiltContainer from '../components/ui/TiltContainer';
 import ConfettiBurst from '../components/ui/ConfettiBurst';
+import ZoomPanWorkspace from '../components/ui/ZoomPanWorkspace';
 
 import { EDITOR_FILTERS, FRAME_CATEGORIES, FRAME_COLORS, STICKER_LIBRARY, FONT_FAMILIES, GRADIENT_PRESETS, FRAME_PATTERNS } from '../utils/constants';
 
@@ -363,10 +364,8 @@ const Editor = () => {
                  </div>
 
                  {/* Canvas Scroller/Container - Shrinks to fit */}
-                 <div className="w-full flex-1 min-h-0 flex items-center justify-center p-4 pb-32 lg:p-8 overflow-hidden touch-none relative">
-                    {/* Visual 'Fit to Screen' Container */}
-                    <div className="relative w-full h-full flex items-center justify-center">
-                        <TiltContainer className="flex items-center justify-center scale-[0.65] md:scale-100 origin-center transition-transform duration-300">
+                 <div className="w-full flex-1 min-h-0 flex items-center justify-center overflow-hidden touch-none relative bg-neutral-100">
+                    <ZoomPanWorkspace className="w-full h-full">
                             <div 
                                 ref={editorRef}
                                 className={`relative shadow-2xl transition-all duration-300 grid content-center justify-items-center ${getLayoutClasses()} bg-white origin-center`}
@@ -403,8 +402,7 @@ const Editor = () => {
                                     <div className="absolute bottom-2 right-2 text-[10px] font-cute font-bold text-vintage-brown/50 opacity-50">LoveBooth</div>
                                 )}
                             </div>
-                        </TiltContainer>
-                    </div>
+                    </ZoomPanWorkspace>
                  </div>
 
              </div>
