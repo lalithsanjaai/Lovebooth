@@ -2,9 +2,9 @@ import React, { useRef, useState, useEffect } from 'react';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
 import { ZoomIn, ZoomOut, Maximize, RotateCcw } from 'lucide-react';
 
-const ZoomPanWorkspace = ({ children, className = '' }) => {
+const ZoomPanWorkspace = ({ children, className = '', initialScale = 1 }) => {
     const constraintsRef = useRef(null);
-    const [scale, setScale] = useState(1);
+    const [scale, setScale] = useState(initialScale);
     const [isDragging, setIsDragging] = useState(false);
 
     // Zoom handlers
