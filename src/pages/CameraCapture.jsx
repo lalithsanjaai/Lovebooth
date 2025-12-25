@@ -156,7 +156,7 @@ const CameraCapture = () => {
 
             {/* Camera FrameContainer - Responsive Grid/Flex */}
             <div 
-                className="relative w-full max-w-[90vw] md:max-w-4xl flex-1 flex flex-col justify-center min-h-0 basis-auto aspect-[3/4] md:aspect-[4/3] bg-gray-100 rounded-2xl md:rounded-[2rem] overflow-hidden shadow-lg border-4 md:border-8 border-white ring-2 md:ring-4 ring-pastel-pink/30 mb-2 md:mb-4 max-h-[60vh] md:max-h-[65vh] mx-auto"
+                className="relative w-full max-w-[90vw] md:max-w-xl flex-1 flex flex-col justify-center min-h-0 basis-auto aspect-square bg-gray-100 rounded-2xl md:rounded-[2rem] overflow-hidden shadow-lg border-4 md:border-8 border-white ring-2 md:ring-4 ring-pastel-pink/30 mb-2 md:mb-4 max-h-[50vh] md:max-h-[60vh] mx-auto"
             >
                 <Webcam
                     audio={false}

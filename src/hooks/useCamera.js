@@ -13,8 +13,14 @@ const useCamera = () => {
       if (!video || video.readyState !== 4) return null;
 
       const canvas = document.createElement('canvas');
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
+      
+      // Calculate Square Crop
+      const size = Math.min(video.videoWidth, video.videoHeight);
+      const startX = (video.videoWidth - size) / 2;
+      const startY = (video.videoHeight - size) / 2;
+
+      canvas.width = size;
+      canvas.height = size;
       
       const ctx = canvas.getContext('2d');
       // Mirror if user facing
@@ -23,8 +29,8 @@ const useCamera = () => {
           ctx.scale(-1, 1);
       }
       
-      // Draw image
-      ctx.drawImage(video, 0, 0);
+      // Draw Square Crop
+      ctx.drawImage(video, startX, startY, size, size, 0, 0, size, size);
       
       return canvas.toDataURL('image/jpeg', 0.92);
     }
