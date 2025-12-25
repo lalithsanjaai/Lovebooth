@@ -363,48 +363,48 @@ const Editor = () => {
                  </div>
 
                  {/* Canvas Scroller/Container - Shrinks to fit */}
-                 <div className="w-full flex-1 min-h-0 flex items-center justify-center p-4 pb-32 lg:p-8 overflow-hidden touch-none">
-                  <TiltContainer className="flex items-center justify-center max-h-full max-w-full">
-                    <div 
-                        ref={editorRef}
-                        className={`relative shadow-2xl transition-all duration-300 grid content-center justify-items-center ${getLayoutClasses()} bg-white origin-center`}
-                        style={{ 
-                            filter: settings.filter !== 'normal' ? undefined : 'none',
-                            background: settings.frameColor || '#ffffff',
-                            ...settings.frameStyle?.style,
-                            gap: selectedLayout === 'collage' ? '8px' : '16px',
-                            transformStyle: 'preserve-3d',
-                            // Responsive Scale Logic could go here, but CSS 'contain' is easier
-                            maxHeight: '100%',
-                            maxWidth: '100%'
-                        }}
-                        onClick={(e) => e.stopPropagation()} 
-                    >
-                        {capturedImages.map((img, idx) => (
-                            <div key={idx} className={`relative overflow-hidden ${selectedLayout === 'single' ? 'aspect-square' : ''}`}>
-                                <img src={img} alt="" className={`w-full h-full object-cover ${SAFE_FILTERS.find(f => f.id === settings.filter)?.class || ''}`} />
+                 <div className="w-full flex-1 min-h-0 flex items-center justify-center p-4 pb-32 lg:p-8 overflow-hidden touch-none relative">
+                    {/* Visual 'Fit to Screen' Container */}
+                    <div className="relative w-full h-full flex items-center justify-center">
+                        <TiltContainer className="flex items-center justify-center scale-[0.65] md:scale-100 origin-center transition-transform duration-300">
+                            <div 
+                                ref={editorRef}
+                                className={`relative shadow-2xl transition-all duration-300 grid content-center justify-items-center ${getLayoutClasses()} bg-white origin-center`}
+                                style={{ 
+                                    filter: settings.filter !== 'normal' ? undefined : 'none',
+                                    background: settings.frameColor || '#ffffff',
+                                    ...settings.frameStyle?.style,
+                                    gap: selectedLayout === 'collage' ? '8px' : '16px',
+                                    transformStyle: 'preserve-3d',
+                                }}
+                                onClick={(e) => e.stopPropagation()} 
+                            >
+                                {capturedImages.map((img, idx) => (
+                                    <div key={idx} className={`relative overflow-hidden ${selectedLayout === 'single' ? 'aspect-square' : ''}`}>
+                                        <img src={img} alt="" className={`w-full h-full object-cover ${SAFE_FILTERS.find(f => f.id === settings.filter)?.class || ''}`} />
+                                    </div>
+                                ))}
+                                {/* Overlay Elements */}
+                                <div className="absolute inset-0 z-10 pointer-events-none" style={{ transform: 'translateZ(20px)' }}>
+                                    {elements.map(el => (
+                                        <div key={el.id} className="pointer-events-auto absolute" style={{ top: '50%', left: '50%' }}> 
+                                            <DraggableElement 
+                                                {...el}
+                                                isSelected={selectedElementId === el.id}
+                                                onSelect={setSelectedElementId}
+                                                onDelete={() => setElements(prev => prev.filter(e => e.id !== el.id))}
+                                                onUpdate={(id, up) => setElements(prev => prev.map(e => e.id === id ? { ...e, ...up } : e))}
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                                {/* Watermark */}
+                                {isExporting && (
+                                    <div className="absolute bottom-2 right-2 text-[10px] font-cute font-bold text-vintage-brown/50 opacity-50">LoveBooth</div>
+                                )}
                             </div>
-                        ))}
-                        {/* Overlay Elements */}
-                        <div className="absolute inset-0 z-10 pointer-events-none" style={{ transform: 'translateZ(20px)' }}>
-                             {elements.map(el => (
-                                 <div key={el.id} className="pointer-events-auto absolute" style={{ top: '50%', left: '50%' }}> 
-                                    <DraggableElement 
-                                        {...el}
-                                        isSelected={selectedElementId === el.id}
-                                        onSelect={setSelectedElementId}
-                                        onDelete={() => setElements(prev => prev.filter(e => e.id !== el.id))}
-                                        onUpdate={(id, up) => setElements(prev => prev.map(e => e.id === id ? { ...e, ...up } : e))}
-                                    />
-                                 </div>
-                             ))}
-                        </div>
-                         {/* Watermark */}
-                         {isExporting && (
-                             <div className="absolute bottom-2 right-2 text-[10px] font-cute font-bold text-vintage-brown/50 opacity-50">LoveBooth</div>
-                         )}
+                        </TiltContainer>
                     </div>
-                  </TiltContainer>
                  </div>
 
              </div>
