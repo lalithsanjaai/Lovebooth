@@ -350,30 +350,33 @@ const Editor = () => {
 
 
     return (
-        <BaseLayout className="flex flex-col lg:flex-row h-full overflow-hidden">
+        <BaseLayout className="flex flex-col lg:flex-row h-[100dvh] overflow-hidden bg-vintage-cream/50">
              <ConfettiBurst />
              
-             {/* Main Canvas Area - Responsive */}
-             <div className="flex-1 relative flex items-center justify-center overflow-hidden bg-vintage-cream/50" onClick={() => setSelectedElementId(null)}>
+             {/* Main Canvas Area - Responsive Flex Column */}
+             <div className="flex-1 relative flex flex-col items-center justify-start lg:justify-center overflow-hidden min-h-0" onClick={() => setSelectedElementId(null)}>
                 
-                 {/* Top Bar Mobile */}
-                 <div className="absolute top-0 left-0 right-0 p-4 flex justify-between items-center z-30 lg:hidden pointer-events-none">
-                     <Button onClick={() => navigate('/')} variant="ghost" className="pointer-events-auto bg-white/80 p-2 rounded-full shadow-sm text-vintage-brown" icon={RotateCw}> </Button>
-                     <Button onClick={handleDownload} className="pointer-events-auto bg-vintage-red text-white shadow-lg shadow-red-200/50 rounded-full px-6 py-2 font-bold text-sm" icon={Download}>Save</Button>
+                 {/* Top Bar Mobile - Compact & Fixed */}
+                 <div className="w-full p-4 flex justify-between items-center z-30 lg:hidden shrink-0 pt-safe-top">
+                     <Button onClick={() => navigate('/')} variant="ghost" className="bg-white/90 backdrop-blur rounded-full shadow-sm text-vintage-brown w-10 h-10 p-0 flex items-center justify-center"> <RotateCw size={18} /> </Button>
+                     <Button onClick={handleDownload} className="bg-vintage-red text-white shadow-lg shadow-red-200/50 rounded-full px-5 py-2 font-bold text-xs flex items-center gap-2"> <Download size={14}/> Save </Button>
                  </div>
 
-                 {/* Canvas Scroller */}
-                 <div className="w-full h-full overflow-auto flex items-center justify-center px-4 pt-32 pb-48 lg:p-8 custom-scrollbar">
-                  <TiltContainer className="flex items-center justify-center p-8">
+                 {/* Canvas Scroller/Container - Shrinks to fit */}
+                 <div className="w-full flex-1 min-h-0 flex items-center justify-center p-4 pb-32 lg:p-8 overflow-hidden touch-none">
+                  <TiltContainer className="flex items-center justify-center max-h-full max-w-full">
                     <div 
                         ref={editorRef}
-                        className={`relative shadow-2xl transition-all duration-300 grid content-center justify-items-center ${getLayoutClasses()} bg-white`}
+                        className={`relative shadow-2xl transition-all duration-300 grid content-center justify-items-center ${getLayoutClasses()} bg-white origin-center`}
                         style={{ 
                             filter: settings.filter !== 'normal' ? undefined : 'none',
                             background: settings.frameColor || '#ffffff',
                             ...settings.frameStyle?.style,
-                            gap: selectedLayout === 'collage' ? '12px' : '24px',
-                            transformStyle: 'preserve-3d' // Ensure children stick
+                            gap: selectedLayout === 'collage' ? '8px' : '16px',
+                            transformStyle: 'preserve-3d',
+                            // Responsive Scale Logic could go here, but CSS 'contain' is easier
+                            maxHeight: '100%',
+                            maxWidth: '100%'
                         }}
                         onClick={(e) => e.stopPropagation()} 
                     >
@@ -432,9 +435,9 @@ const Editor = () => {
                             animate={{ y: 0 }}
                             exit={{ y: '100%' }}
                             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                            className="bg-white rounded-t-[2rem] shadow-[0_-10px_40px_rgba(0,0,0,0.1)] pb-24 pt-6 border-t border-vintage-gold/20"
+                            className="bg-white rounded-t-[2rem] shadow-[0_-10px_40px_rgba(0,0,0,0.1)] pb-24 pt-6 border-t border-vintage-gold/20 max-h-[50vh] overflow-y-auto custom-scrollbar"
                          >
-                             <div className="flex justify-between items-center px-6 mb-4">
+                             <div className="flex justify-between items-center px-6 mb-4 sticky top-0 bg-white z-10 pb-2">
                                  <h3 className="font-cute font-bold text-xl text-vintage-brown capitalize">{activeTab}</h3>
                                  <button onClick={() => setActiveTab(null)} className="p-1 bg-gray-100 rounded-full text-gray-400"><X size={16}/></button>
                              </div>
