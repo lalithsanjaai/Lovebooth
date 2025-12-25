@@ -1,14 +1,23 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import basicSsl from '@vitejs/plugin-basic-ssl';
 
 // https://vitejs.dev/config/
-export default defineConfig(({ command }) => ({
-  plugins: [
-    react(), 
-    ...(command === 'serve' ? [basicSsl()] : [])
-  ],
-  server: {
-    host: true,
-  },
-}));
+export default defineConfig(async ({ command }) => {
+  const plugins = [react()];
+
+  if (command === 'serve') {
+    try {
+      const basicSsl = (await import('@vitejs/plugin-basic-ssl')).default;
+      plugins.push(basicSsl());
+    } catch (e) {
+      console.warn('SSL plugin not found, running in HTTP mode.');
+    }
+  }
+
+  return {
+    plugins,
+    server: {
+      host: true,
+    },
+  };
+});
