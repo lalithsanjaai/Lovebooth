@@ -9,7 +9,7 @@ const ZoomPanWorkspace = ({ children, className = '', initialScale = 1 }) => {
 
     // Zoom handlers
     const handleZoomIn = () => setScale(prev => Math.min(prev + 0.1, 3));
-    const handleZoomOut = () => setScale(prev => Math.max(prev - 0.1, 0.4));
+    const handleZoomOut = () => setScale(prev => Math.max(prev - 0.1, 0.1));
     const handleReset = () => setScale(1);
 
     // Slider handler
@@ -61,7 +61,7 @@ const ZoomPanWorkspace = ({ children, className = '', initialScale = 1 }) => {
                 <button onClick={handleZoomOut} className="text-vintage-brown hover:scale-110 transition-transform"><ZoomOut size={16}/></button>
                 <input 
                     type="range" 
-                    min="0.4" 
+                    min="0.1" 
                     max="2.5" 
                     step="0.05" 
                     value={scale} 
