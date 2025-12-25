@@ -69,7 +69,6 @@ const ZoomPanWorkspace = ({ children, className = '', initialScale = 1 }) => {
                     className="w-32 h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-vintage-red"
                 />
                 <button onClick={handleZoomIn} className="text-vintage-brown hover:scale-110 transition-transform"><ZoomIn size={16}/></button>
-                <span className="text-[10px] font-bold text-vintage-brown w-8 text-center">{Math.round(scale * 100)}%</span>
             </div>
         </div>
     );

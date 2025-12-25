@@ -365,7 +365,7 @@ const Editor = () => {
 
                  {/* Canvas Scroller/Container - Shrinks to fit */}
                  <div className="w-full flex-1 min-h-0 flex items-center justify-center overflow-hidden touch-none relative bg-neutral-100">
-                    <ZoomPanWorkspace className="w-full h-full" initialScale={window.innerWidth < 768 ? 0.6 : 1}>
+                    <ZoomPanWorkspace className="w-full h-full" initialScale={window.innerWidth < 768 ? 0.75 : 1}>
                             <div 
                                 ref={editorRef}
                                 className={`relative shadow-2xl transition-all duration-300 grid content-center justify-items-center ${getLayoutClasses()} bg-white origin-center`}
